@@ -1,3 +1,139 @@
 body {
-    background-color: lightgrey;
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
 }
+/* HEADER CONTENT START */
+header{
+    box-sizing: border-box;
+    display: flex;
+    justify-content:space-evenly; 
+    background-color: rgb(255, 184, 217);
+    margin: 0; 
+    flex-grow: .5;
+    border-bottom: 2px solid black;
+    box-shadow: 0px 0 10px 2px rgba(0,50,100,.5);
+    z-index:1;
+}
+/* HEADER CONTENT END */
+/* MAIN DISPLAY CONTENT START*/
+main{
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-around;
+    background-color: lightsteelblue;
+    background-size: contain;
+    min-height: 300px;
+}
+#start{
+    align-self: center;
+    height: 100px;
+    width: 100px;
+    border: 3px solid black;
+    border-radius: 50%;
+    background-color: deepskyblue;
+    outline: none;
+    transition: font-size .5s ease, font-weight .5s ease;
+}
+#start:hover{
+    font-weight: bold;
+    font-size: 20px;
+}
+.animate-pulse {
+    animation-name: pulse;
+    animation-duration: 3s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+}
+@keyframes pulse {
+    0%{
+        box-shadow: 0 0 3px 3px white;
+    } 50% {
+        box-shadow: 0 0 10px 10px pink;
+    } 100% {
+        box-shadow: 0 0 3px 3px white;
+    } 
+}
+@media screen and (max-width: 550px) {
+    main {
+        background-size: cover; 
+    }
+} 
+/*----SPRITE CONTENT BEGIN*/
+.display{
+    box-sizing: border-box;
+    width: 100px; 
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+.sprite{
+    box-sizing: border-box;
+    width: 10%;
+}
+.animate-keyframe {
+    animation-name: upDown;
+    animation-duration: 2s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    justify-self:flex-end;
+    align-self: flex-end;
+}
+@keyframes upDown {
+    0%{
+        height: 80px;
+        width: 100px;
+    } 50% {
+        height: 65px;
+        width: 95px;
+    } 100% {
+        height: 80px;
+        width: 100px;
+    } 
+}
+/*----SPRITE CONTENT END*/
+/* MAIN DISPLAY CONTENT END */
+/* PROMPT CONTENT START */
+footer {
+    box-shadow: 0px 0 10px 2px rgba(0,50,100,.5);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-top: 2px solid black;
+    background-color: rgb(255, 184, 217);
+    width: 100%;
+    flex-grow: 10;
+    padding: 10px;
+}
+#optionHolder{
+    box-sizing: border-box;
+    display:flex;
+    width: 100%;
+    justify-content:space-evenly;
+    padding: 10px 0 10px 0;
+}
+#text{
+    width:100%;
+}
+.options{
+	background: none;
+	border: none;
+    outline: none;
+    cursor: pointer;
+    transition: color .15s ease-in-out;
+}
+.options:hover{
+    color: white;
+    text-shadow: 0 0 5px lightgrey;
+}
+
+input{
+    border: none;
+    outline: none;
+}
+/* PROMPT CONTENT END */
