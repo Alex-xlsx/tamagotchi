@@ -50,12 +50,13 @@
 
 //Ooooo! Maybe make little black divs that cover the stars on the opening screen, that fade in and out so that they twinkle? 
 
+///////Universal variable declaration
 let friendCount = 0;
 let currentTime = 0;
 let red = 0
 let green = 0;
 let blue = 0;
-
+/////////////////////////------------START OF TIME/CHARACTER STATS
 function setTime(time){
     if (time === 0){
         $('article').css('backgroundImage','none');
@@ -84,28 +85,18 @@ function passTime(){
         bestFriend.sleepiness+= 1;
         bestFriend.hunger+=1;
         bestFriend.boredom+=1;
+        unhappy();
     } else if (currentTime ===4){
         currentTime = 1;
         setTime(currentTime);
         if (bestFriend.age === 10){
-            endGame();
+            gameEnd();
         }
         bestFriend.age++;
         bestFriend.sleepiness-= 3;
         bestFriend.hunger+=1;
         bestFriend.boredom+=1;
-        if (bestFriend.boredom > 5){
-            bestFriend.affection -= 4;
-        }
-        if (bestFriend.sleepiness > 5){
-            bestFriend.affection -= 4;
-        }
-        if (bestFriend.dirtiness > 5){
-            bestFriend.affection -= 4;
-        }
-        if (bestFriend.hunger > 5){
-            bestFriend.affection -= 4;
-        }   
+        unhappy();
     }
 }
 
@@ -144,6 +135,32 @@ function stats() {
     $('#hunger').text(`Hunger: ${bestFriend.hunger}`);
     $('#time').text(`Day: ${bestFriend.age}`);
 }
+function unhappy(){
+    if (bestFriend.boredom > 5){
+        bestFriend.affection -= 3;
+        if (bestFriend.affection < 0){
+            bestFriend.affection = 0;
+        }
+    }
+    if (bestFriend.sleepiness > 5){
+        bestFriend.affection -= 3;
+        if (bestFriend.affection < 0){
+            bestFriend.affection = 0;
+        }
+    }
+    if (bestFriend.dirtiness > 5){
+        bestFriend.affection -= 3;
+        if (bestFriend.affection < 0){
+            bestFriend.affection = 0;
+        }
+    }
+    if (bestFriend.hunger > 5){
+        bestFriend.affection -= 3;
+        if (bestFriend.affection < 0){
+            bestFriend.affection = 0;
+        }
+    }    
+}
 
 function makeFriend(assign,assign2){
     friendCount++
@@ -166,8 +183,84 @@ function makeFriend(assign,assign2){
         //     bouncy(1,bestFriend.width,bestFriend.height);
         // });
     }
+    bestFriend.name = "placeHolder";
+    bestFriend.affection = 0;
+    bestFriend.boredom = 0;
+    bestFriend.sleepiness = 0;
+    bestFriend.dirtiness = 0;
+    bestFriend.hunger = 0;
+    bestFriend.age = 0;
+    bestFriend.width = 50;
+    bestFriend.height = 40;
 }
-$('#start').on('mousedown',function beginGame(){
+//////////----------------BOUNCE FUNCTION. REPLACED WITH CSS???
+waitTime = 0;
+function delayHolder (delay) {
+    let timeWindow = window.setInterval(function (){
+        waitTime = 1;
+        waitTime --;
+        if (waitTime <= 0){
+            window.clearInterval(timeWindow);
+            $('#character1').addClass(`animate-keyframe`);
+            if(bestFriend.age >=3 && bestFriend.affection >=15){
+                $('#character1').css('animation-name','breathe2');
+                bestFriend.width = 75;
+                bestFriend.height = 60;
+            } 
+            if (bestFriend.age >=6 && bestFriend.affection >=30){
+                $('#character1').css('animation-name','breathe3');
+                bestFriend.width = 100;
+                bestFriend.height = 80;
+            }
+        }
+    }, delay);
+}
+function bouncy(bounces,x,y){
+    $('#character1').removeClass(`animate-keyframe`);
+    delayHolder(bounces*550);
+    for (let i = 0;i<bounces;i++){
+        $('#character1').animate({
+            marginBottom: 10,
+            width: x*1.1,
+            height: y*.8
+        },100,'linear');
+        $('#character1').animate({
+            marginBottom: 100,
+            width: x*.8,
+            height: y*1.2
+        },100,'swing');
+        $('#character1').animate({
+            marginBottom: 120,
+            width: x*1.2,
+            height: y*1
+        },100,'linear');
+        $('#character1').animate({
+            marginBottom: 100,
+            width: x*.8,
+            height: y*1.2
+        },50,'swing');
+        $('#character1').animate({
+            marginBottom: 10,
+            width: x*.6,
+            height: y*1.4
+        },50,'swing');
+        $('#character1').animate({
+            marginBottom: 10,
+            width: x*1.4,
+            height: y*.3
+        },100,'linear');
+        $('#character1').animate({
+            marginBottom: 10,
+            width: x,
+            height: y
+        },50,'swing');
+    }
+} 
+//////////----------------BOUNCE FUNCTION. REPLACED WITH CSS???
+/////////////////////////------------END OF TIME/CHARACTER STATS
+
+/////////////////////////---------------------------GAME STARTUP
+$('#start').on('mousedown',function(){
     $('#start').css('backgroundColor','white');
     $('#start').css('color','gold');
 });
@@ -184,36 +277,40 @@ $('#start').on('click',function(){
             opacity: 0
         },2000,'linear',function(){
             $('#start').remove();
-            $('#optionHolder').empty();
-            $('#text').text(`Hello there! You look like you could use a friend. Would you mind helping me make them?`)
-            $('#optionHolder').append($('<button class="options" id="b1">Certainly!</button>'))
-                $('#b1').on('click',function(){
-                    $('#optionHolder').empty();
-                    $('#text').text(`Wonderful, I knew you would help! How about I ask you some questions, that will help us make the best friend we can.`)
-                    $('#optionHolder').append($('<button class="options" id="b1">Lets get started</button>'))        
-                    $('#b1').on('click',function(){
-                        $('#optionHolder').empty();
-                        $('#text').text(`Question 1: Which color do you prefer?`)
-                        $('#optionHolder').append($('<button class="options" id="b1">Red</button>')) 
-                        $('#b1').on('click',function(){
-                            red ++
-                            questions1()  
-                        });
-                        $('#optionHolder').append($('<button class="options" id="b2">Green</button>'))
-                        $('#b2').on('click',function(){
-                            green ++
-                            questions1()  
-                        });
-                        $('#optionHolder').append($('<button class="options" id="b3">Blue</button>'))
-                        $('#b3').on('click',function(){
-                            blue ++
-                            questions1()  
-                        });
-                });
-            });
+            gameStart();    
         });
     });
 });
+function gameStart(){
+    $('#optionHolder').empty();
+        $('#text').text(`Hello there! You look like you could use a friend. Would you mind helping me make them?`)
+        $('#optionHolder').append($('<button class="options" id="b1">Certainly!</button>'))
+            $('#b1').on('click',function(){
+                $('#optionHolder').empty();
+                $('#text').text(`Wonderful, I knew you would help! How about I ask you some questions, that will help us make the best friend we can.`)
+                $('#optionHolder').append($('<button class="options" id="b1">Lets get started</button>'))        
+                $('#b1').on('click',function(){
+                    $('#optionHolder').empty();
+                    $('#text').text(`Question 1: Which color do you prefer?`)
+                    $('#optionHolder').append($('<button class="options" id="b1">Red</button>')) 
+                    $('#b1').on('click',function(){
+                        red ++
+                        questions1()  
+                    });
+                    $('#optionHolder').append($('<button class="options" id="b2">Green</button>'))
+                    $('#b2').on('click',function(){
+                        green ++
+                        questions1()  
+                    });
+                    $('#optionHolder').append($('<button class="options" id="b3">Blue</button>'))
+                    $('#b3').on('click',function(){
+                        blue ++
+                        questions1()  
+                    });
+                });
+            });
+}
+
 function questions1(){
     $('#optionHolder').empty();
     $('#text').text(`Which of these sounds the most fun?`)
@@ -293,71 +390,6 @@ function creation(){
         });
     });
 }
-//////////----------------BOUNCE FUNCTION. REPLACED WITH CSS???
-waitTime = 0;
-function delayHolder (delay) {
-    let timeWindow = window.setInterval(function (){
-        waitTime = 1;
-        waitTime --;
-        if (waitTime <= 0){
-            window.clearInterval(timeWindow);
-            $('#character1').addClass(`animate-keyframe`);
-            if(bestFriend.age >=3 && bestFriend.affection >=15){
-                $('#character1').css('animation-name','breathe2');
-                bestFriend.width = 75;
-                bestFriend.height = 60;
-            } 
-            if (bestFriend.age >=6 && bestFriend.affection >=30){
-                $('#character1').css('animation-name','breathe3');
-                bestFriend.width = 100;
-                bestFriend.height = 80;
-            }
-        }
-    }, delay);
-}
-function bouncy(bounces,x,y){
-    $('#character1').removeClass(`animate-keyframe`);
-    delayHolder(bounces*550);
-    for (let i = 0;i<bounces;i++){
-        $('#character1').animate({
-            marginBottom: 10,
-            width: x*1.1,
-            height: y*.8
-        },100,'linear');
-        $('#character1').animate({
-            marginBottom: 100,
-            width: x*.8,
-            height: y*1.2
-        },100,'swing');
-        $('#character1').animate({
-            marginBottom: 120,
-            width: x*1.2,
-            height: y*1
-        },100,'linear');
-        $('#character1').animate({
-            marginBottom: 100,
-            width: x*.8,
-            height: y*1.2
-        },50,'swing');
-        $('#character1').animate({
-            marginBottom: 10,
-            width: x*.6,
-            height: y*1.4
-        },50,'swing');
-        $('#character1').animate({
-            marginBottom: 10,
-            width: x*1.4,
-            height: y*.3
-        },100,'linear');
-        $('#character1').animate({
-            marginBottom: 10,
-            width: x,
-            height: y
-        },50,'swing');
-    }
-} 
-
-//////////----------------BOUNCE FUNCTION. REPLACED WITH CSS???
 
 //reoccuring text prompts-------------START
 function morning(){
@@ -411,7 +443,7 @@ function exitCreation(){
         passTime();
         stats();
     }).mouseenter(function(){
-        $('#text').text(`Play a game with ${bestFriend.name}. Decreases boredom by 5, but also increases Dirtiness by 2 and increases sleepiness by 1`);
+        $('#text').text(`Read a story to ${bestFriend.name}. Increases Affection by 3, but increases Boredom by 1`);
     }).mouseleave(function(){
         if(currentTime === 1){
             $('#text').text(`It's a beautiful morning! How would you like to play with your friend today?`);    
@@ -431,7 +463,7 @@ function exitCreation(){
         passTime();
         stats();
     }).mouseenter(function(){
-        $('#text').text(`Read a story to ${bestFriend.name}. Increases Affection by 3, but increases Boredom by 1`);
+        $('#text').text(`Play a game with ${bestFriend.name}. Decreases boredom by 5, but also increases Dirtiness by 2 and increases sleepiness by 1`);
     }).mouseleave(function(){
         if(currentTime === 1){
             $('#text').text(`It's a beautiful morning! How would you like to play with your friend today?`);    
@@ -499,19 +531,19 @@ function exitCreation(){
             $('#text').text(`My how time flies, night already! Anything you want to do before bed?`); 
         }
     });
-    //primary button functionality--------------------------------END
 }
+    //primary button functionality--------------------------------END
 
-function endGame(){
+
+function gameEnd(){
     $('#optionHolder').empty();
     $('#text').empty();
-    currentTime = 6;
-    setTime(currentTime);
+    setTime(6);
     $('#text').text('Looks like our time is up! Lets see how your buddy has grown.')
     $('#optionHolder').append($(`<button class="options" id="b1">So soon?</button>`));
         $('#b1').on('click',function(){
             $('#optionHolder').empty();
-            if (bestFriend.affection > 40){
+            if (bestFriend.affection >= 30){
                 $('#text').text('It looks like you really did a great job making your buddy happy. Great job!')
                 $('#optionHolder').append($(`<button class="options" id="b1">Thank you. We had a lot of fun!</button>`));
                     $('#b1').on('click',function(){
@@ -519,24 +551,29 @@ function endGame(){
                         $('#text').text('HAPPY ENDING')
                         $('#optionHolder').append($(`<button class="options" id="b1">Thanks for playing! Start new game?</button>`));
                             $('#b1').on('click',function(){
-                            resetGame();
+                            gameReset();
                             });
                     });                
             } else {
                 $('#text').text(`It seems like you and your buddy could've been better friends. Perhaps you should try again?`)
                 $('#optionHolder').append($(`<button class="options" id="b1">I'll try harder next time!</button>`));
                     $('#b1').on('click',function(){
-                        resetGame();
+                        gameReset();
                     });        
             }
 
         });
 }
 
-
-function resetGame (){
+function gameReset (){
     $('#text').empty();
     $('#optionHolder').empty();
+    $('article').empty();
+    friendCount = 0;
+    currentTime = 0;
+    red = 0
+    green = 0;
+    blue = 0;
     $('#name').text(`-`);
     $('#affection').text(`-`);
     $('#boredom').text(`-`);
@@ -544,5 +581,6 @@ function resetGame (){
     $('#dirtiness').text(`-`);
     $('#hunger').text(`-`);
     $('#time').text(`-`);
-    beginGame();
+    setTime(5)
+    gameStart();
 }
