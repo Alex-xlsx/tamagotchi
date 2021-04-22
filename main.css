@@ -1,9 +1,22 @@
 body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    background-color: lightskyblue;
+}
+main {
     font-family: sans-serif;
     display: flex;
     flex-direction: column;
     align-items: stretch;
+    justify-content: center;
+    border-left: 5px solid rgb(131, 51, 141);
+    border-right: 5px solid rgb(131, 51, 141);
     height: 100vh;
+    width: 100%;
+    max-width: 750px;
+    min-height: 500px;
     margin: 0;
     padding: 0;
 }
@@ -12,24 +25,26 @@ header{
     box-sizing: border-box;
     display: flex;
     justify-content:space-evenly; 
-    padding-top: 15px;
+    padding: 15px 0 5px 0;
     font-size: 14px;
     background-color: rgb(255, 184, 217);
     margin: 0; 
-    flex-grow: .5;
-    border-bottom: 2px solid black;
+    height: 10%;
+    min-height: 50px;
+    border-bottom: 5px solid rgb(87, 0, 99);
     box-shadow: 0px 0 10px 2px rgba(0,50,100,.5);
     z-index:1;
 }
 /* HEADER CONTENT END */
 /* MAIN DISPLAY CONTENT START*/
-main{
+article{
     box-sizing: border-box;
     display: flex;
     justify-content: space-around;
     background-color: lightsteelblue;
     background-size: contain;
     min-height: 300px;
+    height: 60%;
     transition: background-image 1s ease-in-out;
 }
 #start{
@@ -61,12 +76,17 @@ main{
         box-shadow: 0 0 3px 3px white;
     } 
 }
-@media screen and (max-width: 550px) {
+@media screen and (max-width: 750px) {
+    main {
+        border: none;
+    }
+    article {
+        background-size: cover; 
+    }
+}
+@media screen and (max-width: 500px){
     header {
         font-size: 11px;
-    }
-    main {
-        background-size: cover; 
     }
 } 
 /*----SPRITE CONTENT BEGIN*/
@@ -75,6 +95,10 @@ main{
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 10px;
+    height:40px;
+    width:50px;
+    justify-self:flex-end;
+    align-self: flex-end;
 }
 .sprite{
     box-sizing: border-box;
@@ -85,8 +109,6 @@ main{
     animation-duration: 2s;
     animation-timing-function: ease-in-out;
     animation-iteration-count: infinite;
-    justify-self:flex-end;
-    align-self: flex-end;
 }
 @keyframes breathe1 {
     0%{
@@ -124,6 +146,37 @@ main{
         width: 100px;
     } 
 }
+/* @keyframes jump1 {
+    0%{
+        margin-bottom: 10px;
+        width: 50px;
+        height: 40px;
+    } 10% {
+        margin-bottom: 100px;
+        width: 45px;
+        height: 55px;
+    } 30% {
+        margin-bottom: 120px;
+        width: 70px;
+        height: 20px;
+    } 50% {
+        margin-bottom: 100px;
+        width: 45px;
+        height: 55px;
+    } 70% {
+        margin-bottom: 10px;
+        width: 45px;
+        height: 55;
+    } 90% {
+        margin-bottom: 10px;
+        width: 60px;
+        height: 30px;
+    } 100% {
+        margin-bottom: 10px;
+        width: 50px; 
+        height: 40px;
+    }
+} */
 /*----SPRITE CONTENT END*/
 /* MAIN DISPLAY CONTENT END */
 /* PROMPT CONTENT START */
@@ -133,10 +186,10 @@ footer {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    border-top: 2px solid black;
+    border-top: 5px solid rgb(87, 0, 99);
     background-color: rgb(255, 184, 217);
     width: 100%;
-    flex-grow: 10;
+    min-height: 30%;
     padding: 10px;
 }
 #optionHolder{
@@ -164,6 +217,7 @@ footer {
 input{
     border: none;
     outline: none;
+    background:rgb(214, 250, 255);
     width:50%;
     padding: 5px;
     margin-top: 5px;
