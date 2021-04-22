@@ -49,7 +49,15 @@
 //the avatar could be made of a grind of roughly 20 small squares inside 1 larger div. That div could be moved around to move the avatar. Simple squash and stretch can be done on it
 
 //Ooooo! Maybe make little black divs that cover the stars on the opening screen, that fade in and out so that they twinkle? 
-
+///////----------------------------Audio frame START
+// const audio = document.getElementById("audio1");
+// function playAudio(name){
+//     name.play();
+// }
+// function stopAudio(name){
+//     name.pause();
+// }
+///////----------------------------Audio frame END
 ///////Universal variable declaration
 let friendCount = 0;
 let currentTime = 0;
@@ -62,16 +70,16 @@ function setTime(time){
         $('article').css('backgroundImage','none');
     } else if (time === 1) {
         $('article').css('backgroundImage','url(./artAssets/8bitMorning.png)');
-        morning();
+        tellTime();
     } else if (time === 2) {
         $('article').css('backgroundImage','url(./artAssets/8bitDay.png)');
-        afternoon();
+        tellTime();
     } else if (time === 3) {
         $('article').css('backgroundImage','url(./artAssets/8bitEvening.png)');
-        evening();
+        tellTime();
     } else if (time === 4) {
         $('article').css('backgroundImage','url(./artAssets/8bitNight.png)');
-        night()
+        tellTime();
     } else if (time === 5) {
         $('article').css('backgroundImage','url(./artAssets/8bitSpace.png)');
     } else if (time === 6) {
@@ -193,7 +201,7 @@ function makeFriend(assign,assign2){
     bestFriend.width = 50;
     bestFriend.height = 40;
 }
-//////////----------------BOUNCE FUNCTION. REPLACED WITH CSS???
+//////////--------------------------ANIMATIONS START 
 waitTime = 0;
 function delayHolder (delay) {
     let timeWindow = window.setInterval(function (){
@@ -256,13 +264,59 @@ function bouncy(bounces,x,y){
         },50,'swing');
     }
 } 
-//////////----------------BOUNCE FUNCTION. REPLACED WITH CSS???
+function squishy(squishes,x,y){
+    $('#character1').removeClass(`animate-keyframe`);
+    delayHolder(squishes*300);
+    for (let i = 0;i<squishes;i++){
+        $('#character1').animate({
+            marginBottom: 10,
+            width: x*1.4,
+            height: y*.2
+        },150,'swing');
+        $('#character1').animate({
+            marginBottom: 10,
+            width: x*.8,
+            height: y*1.2
+        },100,'swing');
+        $('#character1').animate({
+            marginBottom: 10,
+            width: x*1,
+            height: y*1
+        },50,'swing');
+    }
+}
+function sleepy(x,y){
+    $('#character1').removeClass(`animate-keyframe`);
+    delayHolder(1150);
+    $('#character1').animate({
+        marginBottom: 10,
+        width: x*1.8,
+        height: y*.2
+    },700,'swing');
+    $('#character1').animate({
+        marginBottom: 10,
+        width: x*1.8,
+        height: y*.2
+    },300,'linear');
+    $('#character1').animate({
+        marginBottom: 10,
+        width: x*.7,
+        height: y*1.3
+    },100,'swing');
+    $('#character1').animate({
+        marginBottom: 10,
+        width: x*1,
+        height: y*1
+    },50,'swing');
+}
+//////////--------------------------ANIMATIONS END 
 /////////////////////////------------END OF TIME/CHARACTER STATS
 
 /////////////////////////---------------------------GAME STARTUP
 $('#start').on('mousedown',function(){
     $('#start').css('backgroundColor','white');
     $('#start').css('color','gold');
+    $('#text').text('');
 });
 $('#start').on('click',function(){
     $('#start').css('color','white');
@@ -271,11 +325,11 @@ $('#start').on('click',function(){
         borderRadius: 0,
         height: '100%',
         width: '100%'
-    },250,'linear',function(){    
+    },250,'linear',function(){   
         setTime(5);   
         $('#start').animate({
             opacity: 0
-        },2000,'linear',function(){
+        },1500,'swing',function(){
             $('#start').remove();
             gameStart();    
         });
@@ -391,23 +445,46 @@ function creation(){
     });
 }
 
-//reoccuring text prompts-------------START
-function morning(){
-    $('#text').text(`It's a beautiful morning! How would you like to play with your friend today?`); 
+function tellTime(){
+    if(currentTime === 1){
+        $('#text').text(`It's a beautiful morning! How would you like to play with your friend today?`);    
+    } else if (currentTime ===2){
+        $('#text').text(`It's a lovely afternoon. What would you like to do with your friend?`); 
+    } else if (currentTime ===3){
+        $('#text').text(`It's a splended evening. Would you like to do something with your friend?`); 
+    } else if (currentTime ===4){
+        $('#text').text(`My how time flies, night already! Anything you want to do before bed?`); 
+    }  
 }
-function afternoon(){
-    $('#text').text(`It's a lovely afternoon. What would you like to do with your friend?`); 
-}
-function evening(){
-    $('#text').text(`It's a splended evening. Would you like to do something with your friend?`); 
-}
-function night(){
-    $('#text').text(`My how time flies, night already! Anything you want to do before bed?`); 
-}
-//reoccuring text prompts-------------END
 function exitCreation(){
     stats();
     bouncy(2,bestFriend.width,bestFriend.height);
+    $('#optionHolder').empty();
+    $('#text').text(`A few tips to help you get started: Your new buddy loves Affection, so you should pet it and read to it whenever you can.`); 
+    $('#optionHolder').append($('<button class="options" id="b1" type="submit">Sounds easy enough</button>'));
+    $('#b1').on('click',function(){
+        $('#optionHolder').empty();
+        $('#text').text(`However, over time your buddy will become more bored, hungry, and sleepy over time.`)
+        $('#optionHolder').append($('<button class="options" id="b1" type="submit">Oh dear.</button>'));
+        $('#b1').on('click',function(){
+            $('#optionHolder').empty();
+            $('#text').text(`Every day at the end of the night your buddy will go to sleep and become less tired, but you'll need to make sure all their needs are met or their affection will go down.`)
+            $('#optionHolder').append($('<button class="options" id="b1" type="submit">Sleep is important</button>'));
+            $('#b1').on('click',function(){
+                $('#optionHolder').empty();
+                $('#text').text(`Good luck! I know you can do it.`);
+                $('#optionHolder').append($(`<button class="options" id="b1" type="submit">I'll try my best!</button>`));
+                $('#b1').on('click',function(){
+                    mainLoop();
+                });     
+            });    
+        });
+    });
+}
+
+
+function mainLoop (){
+    tellTime();
     $('#optionHolder').empty();
     $('#optionHolder').append($(`<button class="options" id="b1">Pet</button>`));
     $('#optionHolder').append($(`<button class="options" id="b2">Read</button>`));
@@ -415,65 +492,41 @@ function exitCreation(){
     $('#optionHolder').append($(`<button class="options" id="b4">Feed</button>`));
     $('#optionHolder').append($(`<button class="options" id="b5">Nap</button>`));
     $('#optionHolder').append($(`<button class="options" id="b6">Clean</button>`));
-    //primary button functionality--------------------------------START
+//primary button functionality--------------------------------START
     $('#b1').on('click',function(){//--------------BUTTON 1
         bestFriend.affection += 3;
         bestFriend.sleepiness +=1;
-        bouncy(1,bestFriend.width,bestFriend.height);
+        squishy(3,bestFriend.width,bestFriend.height);
         passTime();
         stats();
         /////////////////////////THIS MOUSE ENTER/EXIT REPEATS 6 TIMES. HOW DO I MAKE THIS A FUNCTION WITHOUT IT AUTOCALLING ITSELF?
     }).mouseenter(function(){
         $('#text').text(`Gently pet your soft friend. Increases Affection by 3, but increases sleepiness by 1`);
     }).mouseleave(function(){
-        if(currentTime === 1){
-            $('#text').text(`It's a beautiful morning! How would you like to play with your friend today?`);    
-        } else if (currentTime ===2){
-            $('#text').text(`It's a lovely afternoon. What would you like to do with your friend?`); 
-        } else if (currentTime ===3){
-            $('#text').text(`It's a splended evening. Would you like to do something with your friend?`); 
-        } else if (currentTime ===4){
-            $('#text').text(`My how time flies, night already! Anything you want to do before bed?`); 
-        }
+        tellTime();
     });
     $('#b2').on('click',function(){//--------------BUTTON 2
         bestFriend.affection +=3;
         bestFriend.boredom +=1;
-        bouncy(1,bestFriend.width,bestFriend.height);
+        squishy(2,bestFriend.width,bestFriend.height);
         passTime();
         stats();
     }).mouseenter(function(){
         $('#text').text(`Read a story to ${bestFriend.name}. Increases Affection by 3, but increases Boredom by 1`);
     }).mouseleave(function(){
-        if(currentTime === 1){
-            $('#text').text(`It's a beautiful morning! How would you like to play with your friend today?`);    
-        } else if (currentTime ===2){
-            $('#text').text(`It's a lovely afternoon. What would you like to do with your friend?`); 
-        } else if (currentTime ===3){
-            $('#text').text(`It's a splended evening. Would you like to do something with your friend?`); 
-        } else if (currentTime ===4){
-            $('#text').text(`My how time flies, night already! Anything you want to do before bed?`); 
-        }
+        tellTime();
     });
     $('#b3').on('click',function(){//--------------BUTTON 3
         bestFriend.boredom -= 5;
         bestFriend.dirtiness += 2;
         bestFriend.sleepiness += 1;
-        bouncy(1,bestFriend.width,bestFriend.height);
+        bouncy(2,bestFriend.width,bestFriend.height);
         passTime();
         stats();
     }).mouseenter(function(){
         $('#text').text(`Play a game with ${bestFriend.name}. Decreases boredom by 5, but also increases Dirtiness by 2 and increases sleepiness by 1`);
     }).mouseleave(function(){
-        if(currentTime === 1){
-            $('#text').text(`It's a beautiful morning! How would you like to play with your friend today?`);    
-        } else if (currentTime ===2){
-            $('#text').text(`It's a lovely afternoon. What would you like to do with your friend?`); 
-        } else if (currentTime ===3){
-            $('#text').text(`It's a splended evening. Would you like to do something with your friend?`); 
-        } else if (currentTime ===4){
-            $('#text').text(`My how time flies, night already! Anything you want to do before bed?`); 
-        }
+        tellTime();
     });
     $('#b4').on('click',function(){//--------------BUTTON 4
         bestFriend.hunger -= 4;
@@ -484,55 +537,31 @@ function exitCreation(){
     }).mouseenter(function(){
         $('#text').text(`Eat a healthy snack with ${bestFriend.name}. Decreases Hunger by 4, but also increases Dirtiness by by 1`);
     }).mouseleave(function(){
-        if(currentTime === 1){
-            $('#text').text(`It's a beautiful morning! How would you like to play with your friend today?`);    
-        } else if (currentTime ===2){
-            $('#text').text(`It's a lovely afternoon. What would you like to do with your friend?`); 
-        } else if (currentTime ===3){
-            $('#text').text(`It's a splended evening. Would you like to do something with your friend?`); 
-        } else if (currentTime ===4){
-            $('#text').text(`My how time flies, night already! Anything you want to do before bed?`); 
-        }
+        tellTime();
     });
     $('#b5').on('click',function(){ //--------------BUTTON 5
         bestFriend.sleepiness -= 4;
         bestFriend.boredom += 1;
-        bouncy(1,bestFriend.width,bestFriend.height);
+        sleepy(bestFriend.width,bestFriend.height);
         passTime();
         stats();
     }).mouseenter(function(){
         $('#text').text(`Take a nap with your little friend. Decreases Sleepiness by 4, but increases boredom by 1`);
     }).mouseleave(function(){
-        if(currentTime === 1){
-            $('#text').text(`It's a beautiful morning! How would you like to play with your friend today?`);    
-        } else if (currentTime ===2){
-            $('#text').text(`It's a lovely afternoon. What would you like to do with your friend?`); 
-        } else if (currentTime ===3){
-            $('#text').text(`It's a splended evening. Would you like to do something with your friend?`); 
-        } else if (currentTime ===4){
-            $('#text').text(`My how time flies, night already! Anything you want to do before bed?`); 
-        }
+        tellTime();
     });
     $('#b6').on('click',function(){//--------------BUTTON 6
         bestFriend.dirtiness -= 5;
-        bouncy(1,bestFriend.width,bestFriend.height);
+        squishy(2,bestFriend.width,bestFriend.height);
         passTime();
         stats();
     }).mouseenter(function(){
         $('#text').text(`Give your friend a bath. Decreases Dirtiness by 5.`);
     }).mouseleave(function(){
-        if(currentTime === 1){
-            $('#text').text(`It's a beautiful morning! How would you like to play with your friend today?`);    
-        } else if (currentTime ===2){
-            $('#text').text(`It's a lovely afternoon. What would you like to do with your friend?`); 
-        } else if (currentTime ===3){
-            $('#text').text(`It's a splended evening. Would you like to do something with your friend?`); 
-        } else if (currentTime ===4){
-            $('#text').text(`My how time flies, night already! Anything you want to do before bed?`); 
-        }
+        tellTime();
     });
 }
-    //primary button functionality--------------------------------END
+//primary button functionality--------------------------------END
 
 
 function gameEnd(){

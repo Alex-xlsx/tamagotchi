@@ -1,3 +1,6 @@
+*{
+    font-family: 'Nunito', sans-serif;
+}
 body {
     margin: 0;
     padding: 0;
@@ -6,13 +9,12 @@ body {
     background-color: lightskyblue;
 }
 main {
-    font-family: sans-serif;
     display: flex;
     flex-direction: column;
     align-items: stretch;
     justify-content: center;
-    border-left: 5px solid rgb(131, 51, 141);
-    border-right: 5px solid rgb(131, 51, 141);
+    border-left: 5px solid rgb(72, 83, 148);
+    border-right: 5px solid rgb(72, 83, 148);
     height: 100vh;
     width: 100%;
     max-width: 750px;
@@ -26,12 +28,12 @@ header{
     display: flex;
     justify-content:space-evenly; 
     padding: 15px 0 5px 0;
-    font-size: 14px;
+    font-size: 16px;
     background-color: rgb(255, 184, 217);
     margin: 0; 
     height: 10%;
     min-height: 50px;
-    border-bottom: 5px solid rgb(131, 51, 141);
+    border-bottom: 5px solid rgb(189, 130, 197);
     box-shadow: 0px 0 10px 2px rgba(0,50,100,.5);
     z-index:1;
 }
@@ -55,40 +57,28 @@ article{
     border-radius: 50%;
     background-color: deepskyblue;
     outline: none;
+    font-size: 16px;
     transition: font-size .5s ease, font-weight .5s ease;
 }
 #start:hover{
     font-weight: bold;
-    font-size: 20px;
+    font-size: 25px;
 }
 .animate-pulse {
     animation-name: pulse;
-    animation-duration: 3s;
+    animation-duration: 3.5s;
     animation-timing-function: ease-in-out;
     animation-iteration-count: infinite;
 }
 @keyframes pulse {
     0%{
-        box-shadow: 0 0 3px 3px white;
+        box-shadow: 0 0 5px 5px white;
     } 50% {
-        box-shadow: 0 0 10px 10px pink;
+        box-shadow: 0 0 15px 15px pink;
     } 100% {
-        box-shadow: 0 0 3px 3px white;
+        box-shadow: 0 0 5px 5px white;
     } 
 }
-@media screen and (max-width: 750px) {
-    main {
-        border: none;
-    }
-    article {
-        background-size: cover; 
-    }
-}
-@media screen and (max-width: 500px){
-    header {
-        font-size: 11px;
-    }
-} 
 /*----SPRITE CONTENT BEGIN*/
 .display{
     box-sizing: border-box;
@@ -146,47 +136,6 @@ article{
         width: 100px;
     } 
 }
-.floatingObject {
-    position: absolute;
-    height: 50px;
-    width: 50px;
-}
-.spriteHeart{
-    box-sizing: border-box;
-    width: 25%;
-    background-color: red;
-}
-/* @keyframes jump1 {
-    0%{
-        margin-bottom: 10px;
-        width: 50px;
-        height: 40px;
-    } 10% {
-        margin-bottom: 100px;
-        width: 45px;
-        height: 55px;
-    } 30% {
-        margin-bottom: 120px;
-        width: 70px;
-        height: 20px;
-    } 50% {
-        margin-bottom: 100px;
-        width: 45px;
-        height: 55px;
-    } 70% {
-        margin-bottom: 10px;
-        width: 45px;
-        height: 55;
-    } 90% {
-        margin-bottom: 10px;
-        width: 60px;
-        height: 30px;
-    } 100% {
-        margin-bottom: 10px;
-        width: 50px; 
-        height: 40px;
-    }
-} */
 /*----SPRITE CONTENT END*/
 /* MAIN DISPLAY CONTENT END */
 /* PROMPT CONTENT START */
@@ -196,7 +145,7 @@ footer {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    border-top: 5px solid rgb(131, 51, 141);
+    border-top: 5px solid rgb(189, 130, 197);
     background-color: rgb(255, 184, 217);
     width: 100%;
     min-height: 30%;
@@ -211,8 +160,10 @@ footer {
 }
 #text{
     width:100%;
+    font-size: 20px;
 }
 .options{
+    font-size: 16px;
 	background: none;
 	border: none;
     outline: none;
@@ -233,3 +184,22 @@ input{
     margin-top: 5px;
 }
 /* PROMPT CONTENT END */
+/* POST CONTENT MEDIA EDITS */
+@media screen and (max-width: 750px) {
+    main {
+        border: none;
+    }
+    article {
+        background-size: cover; 
+    }
+}
+@media screen and (max-width: 600px){
+    header {
+        font-size: 12px;
+    }
+} 
+@media screen and (min-width: 1250px){
+    footer {
+        min-height: 250px;
+    }
+} 
