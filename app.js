@@ -54,7 +54,6 @@
 //Ooooo! Maybe make little black divs that cover the stars on the opening screen, that fade in and out so that they twinkle? 
 
 ///////Universal variable declaration
-let friendCount = 0;
 let currentTime = 0;
 let red = 0
 let green = 0;
@@ -123,20 +122,25 @@ function passTime(){
     }
 }
 
-const bestFriend = {
-    name : "placeHolder",
-    affection : 0,
-    boredom : 0,
-    sleepiness : 0,
-    dirtiness : 0,
-    hunger : 0,
-    age : 0,
-    width : 50,
-    height : 40
-}
+bestFriend = {};
 function testCheck (){
     console.log(bestFriend);
 }
+class friends {
+    static totalFriends = 0;
+    constructor (){
+        this.name = "placeHolder";
+        this.affection = 0;
+        this.boredom = 0;
+        this.sleepiness = 0;
+        this.dirtiness = 0;
+        this.hunger = 0; 
+        this.age = 0;
+        this.width = 50;
+        this.height = 40;
+    }
+}
+
 function stats() {
     $('#name').text(`${bestFriend.name}`);
     $('#affection').text(`Affection: ${bestFriend.affection}`);
@@ -186,11 +190,11 @@ function unhappy(){
 }
 
 function makeFriend(assign,assign2){
-    friendCount++
-    $('article').append($(`<div class="display animate-keyframe" id="character${friendCount}"></div>`));  
+    bestFriend = new friends;
+    $('article').append($(`<div class="display animate-keyframe" id="character1"></div>`));  
     for(let i = 0;i<60;i++){
         const pixel = $('<div class="sprite"></div>');
-        $(`#character${friendCount}`).append(pixel);
+        $(`#character1`).append(pixel);
         $(pixel).css('backgroundColor',assign);  
         if (i===0){
             $(pixel).css('borderRadius','90% 0 0 0');
@@ -201,20 +205,7 @@ function makeFriend(assign,assign2){
         } else if (i === 31 || i === 38){
             $(pixel).css('backgroundColor','pink');
         }
-        ///////FIND OUT WHY THIS MAKES INIFINITY BOUNCE
-        // $(`#character${friendCount}`).on('click',function(){
-        //     bouncy(1,bestFriend.width,bestFriend.height);
-        // });
     }
-    bestFriend.name = "placeHolder";
-    bestFriend.affection = 0;
-    bestFriend.boredom = 0;
-    bestFriend.sleepiness = 0;
-    bestFriend.dirtiness = 0;
-    bestFriend.hunger = 0;
-    bestFriend.age = 0;
-    bestFriend.width = 50;
-    bestFriend.height = 40;
 }
 //////////--------------------------ANIMATIONS START 
 waitTime = 0;
@@ -669,7 +660,6 @@ function gameReset (){
     $('#text').empty();
     $('#optionHolder').empty();
     $('article').empty();
-    friendCount = 0;
     currentTime = 0;
     red = 0
     green = 0;
