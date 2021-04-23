@@ -365,7 +365,7 @@ function gameStart(){
     //this should make a cool fade
         playAudio(audio5);
         $(audio5).animate({
-            volume: .1
+            volume: .05
         },1000,'linear');
         audio5.loop = true;
     $('#optionHolder').empty();
@@ -504,7 +504,7 @@ function tellTime(){
 function exitCreation(){
     stopAudio(audio5);
     audio5.loop = false;
-    audio6.volume = .1;
+    audio6.volume = .05;
     playAudio(audio6);
     audio6.loop = true;
     stats();
@@ -629,7 +629,7 @@ function mainLoop (){
 function gameEnd(){
     stopAudio(audio6);
     audio6.loop = false;
-    audio7.volume = .075;
+    audio7.volume = .05;
     playAudio(audio7);
     audio7.loop = true;
     $('#optionHolder').empty();
