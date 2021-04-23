@@ -13,8 +13,9 @@ main {
     flex-direction: column;
     align-items: stretch;
     justify-content: center;
-    border-left: 5px solid rgb(72, 83, 148);
-    border-right: 5px solid rgb(72, 83, 148);
+    box-shadow: 0 0 20px 0 rgb(44, 51, 109);
+    border-left: 20px solid rgb(221, 93, 153);
+    border-right: 20px solid rgb(221, 93, 153);
     height: 100vh;
     width: 100%;
     max-width: 750px;
@@ -33,8 +34,7 @@ header{
     margin: 0; 
     height: 10%;
     min-height: 50px;
-    border-bottom: 5px solid rgb(189, 130, 197);
-    box-shadow: 0px 0 10px 2px rgba(0,50,100,.5);
+    border-bottom: 5px solid rgb(226, 140, 180);
     z-index:1;
 }
 /* HEADER CONTENT END */
@@ -44,6 +44,7 @@ article{
     display: flex;
     justify-content: space-around;
     background-color: lightsteelblue;
+    box-shadow: inset 0 0 10px -2px rgb(18, 80, 151);
     background-size: contain;
     min-height: 300px;
     height: 60%;
@@ -72,11 +73,11 @@ article{
 }
 @keyframes pulse {
     0%{
-        box-shadow: 0 0 5px 5px white;
+        box-shadow: 0 0 5px 3px white;
     } 50% {
         box-shadow: 0 0 15px 15px pink;
     } 100% {
-        box-shadow: 0 0 5px 5px white;
+        box-shadow: 0 0 5px 3px white;
     } 
 }
 /*----SPRITE CONTENT BEGIN*/
@@ -114,38 +115,37 @@ article{
 }
 @keyframes breathe2 {
     0%{
-        height: 60px;
-        width: 75px;
-    } 50% {
-        height: 55px;
-        width: 70px;
-    } 100% {
-        height: 60px;
-        width: 75px;
-    } 
-}
-@keyframes breathe3 {
-    0%{
         height: 80px;
         width: 100px;
     } 50% {
         height: 85px;
-        width: 95px;
+        width: 95x;
     } 100% {
         height: 80px;
         width: 100px;
+    } 
+}
+@keyframes breathe3 {
+    0%{
+        height: 120px;
+        width: 150px;
+    } 50% {
+        height: 130px;
+        width: 140px;
+    } 100% {
+        height: 120px;
+        width: 150px;
     } 
 }
 /*----SPRITE CONTENT END*/
 /* MAIN DISPLAY CONTENT END */
 /* PROMPT CONTENT START */
 footer {
-    box-shadow: 0px 0 10px 2px rgba(0,50,100,.5);
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    border-top: 5px solid rgb(189, 130, 197);
+    border-top: 5px solid rgb(226, 140, 180);
     background-color: rgb(255, 184, 217);
     width: 100%;
     min-height: 30%;
@@ -157,6 +157,7 @@ footer {
     width: 100%;
     justify-content:space-evenly;
     padding: 10px 0 10px 0;
+    min-height: 50px;
 }
 #text{
     width:100%;
@@ -164,6 +165,7 @@ footer {
 }
 .options{
     font-size: 16px;
+    min-width: 16%;
 	background: none;
 	border: none;
     outline: none;
@@ -173,6 +175,15 @@ footer {
 .options:hover{
     color: white;
     text-shadow: 0 0 5px lightgrey;
+}
+.repeated {
+    box-sizing: border-box;
+    transition: border .2s ease-in-out, background .2s ease-in-out;
+}
+.repeated:hover{
+    border: 1px solid white;
+    border-radius: 5px;
+    background: rgb(226, 140, 180)
 }
 
 input{

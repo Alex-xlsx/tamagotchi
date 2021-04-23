@@ -1,4 +1,7 @@
 
+//NON CODE REQUIREMENTS
+//Step-by-step breakdown (user stories)
+//wireframe
 
 //REQUIREMENTS
 //class for tamagotchi
@@ -212,13 +215,13 @@ function delayHolder (delay) {
             $('#character1').addClass(`animate-keyframe`);
             if(bestFriend.age >=3 && bestFriend.affection >=15){
                 $('#character1').css('animation-name','breathe2');
-                bestFriend.width = 75;
-                bestFriend.height = 60;
+                bestFriend.width = 100;
+                bestFriend.height = 80;
             } 
             if (bestFriend.age >=6 && bestFriend.affection >=30){
                 $('#character1').css('animation-name','breathe3');
-                bestFriend.width = 100;
-                bestFriend.height = 80;
+                bestFriend.width = 150;
+                bestFriend.height = 120;
             }
         }
     }, delay);
@@ -486,20 +489,19 @@ function exitCreation(){
 function mainLoop (){
     tellTime();
     $('#optionHolder').empty();
-    $('#optionHolder').append($(`<button class="options" id="b1">Pet</button>`));
-    $('#optionHolder').append($(`<button class="options" id="b2">Read</button>`));
-    $('#optionHolder').append($(`<button class="options" id="b3">Play</button>`));
-    $('#optionHolder').append($(`<button class="options" id="b4">Feed</button>`));
-    $('#optionHolder').append($(`<button class="options" id="b5">Nap</button>`));
-    $('#optionHolder').append($(`<button class="options" id="b6">Clean</button>`));
+    $('#optionHolder').append($(`<button class="options repeated" id="b1">Pet</button>`));
+    $('#optionHolder').append($(`<button class="options repeated" id="b2">Read</button>`));
+    $('#optionHolder').append($(`<button class="options repeated" id="b3">Play</button>`));
+    $('#optionHolder').append($(`<button class="options repeated" id="b4">Feed</button>`));
+    $('#optionHolder').append($(`<button class="options repeated" id="b5">Nap</button>`));
+    $('#optionHolder').append($(`<button class="options repeated" id="b6">Clean</button>`));
 //primary button functionality--------------------------------START
     $('#b1').on('click',function(){//--------------BUTTON 1
         bestFriend.affection += 3;
-        bestFriend.sleepiness +=1;
+        bestFriend.sleepiness += 1;
         squishy(3,bestFriend.width,bestFriend.height);
         passTime();
         stats();
-        /////////////////////////THIS MOUSE ENTER/EXIT REPEATS 6 TIMES. HOW DO I MAKE THIS A FUNCTION WITHOUT IT AUTOCALLING ITSELF?
     }).mouseenter(function(){
         $('#text').text(`Gently pet your soft friend. Increases Affection by 3, but increases sleepiness by 1`);
     }).mouseleave(function(){
@@ -507,7 +509,7 @@ function mainLoop (){
     });
     $('#b2').on('click',function(){//--------------BUTTON 2
         bestFriend.affection +=3;
-        bestFriend.boredom +=1;
+        bestFriend.boredom += 1;
         squishy(2,bestFriend.width,bestFriend.height);
         passTime();
         stats();
@@ -518,51 +520,55 @@ function mainLoop (){
     });
     $('#b3').on('click',function(){//--------------BUTTON 3
         bestFriend.boredom -= 5;
+        bestFriend.affection += 1;
         bestFriend.dirtiness += 2;
-        bestFriend.sleepiness += 1;
+        bestFriend.sleepiness += 2;
         bouncy(2,bestFriend.width,bestFriend.height);
         passTime();
         stats();
     }).mouseenter(function(){
-        $('#text').text(`Play a game with ${bestFriend.name}. Decreases boredom by 5, but also increases Dirtiness by 2 and increases sleepiness by 1`);
+        $('#text').text(`Play a game with ${bestFriend.name}. Decreases boredom by 5 and increases Affection by 1, but also increases Dirtiness and sleepiness by 2`);
     }).mouseleave(function(){
         tellTime();
     });
     $('#b4').on('click',function(){//--------------BUTTON 4
+        bestFriend.affection += 1;
         bestFriend.hunger -= 4;
-        bestFriend.dirtiness += 1;
+        bestFriend.dirtiness += 2;
         bouncy(1,bestFriend.width,bestFriend.height);
         passTime();
         stats();
     }).mouseenter(function(){
-        $('#text').text(`Eat a healthy snack with ${bestFriend.name}. Decreases Hunger by 4, but also increases Dirtiness by by 1`);
+        $('#text').text(`Eat a healthy snack with ${bestFriend.name}. Decreases Hunger by 4 and gives 1 Affection, but also increases Dirtiness by by 1`);
     }).mouseleave(function(){
         tellTime();
     });
     $('#b5').on('click',function(){ //--------------BUTTON 5
+        bestFriend.affection += 1;
         bestFriend.sleepiness -= 4;
         bestFriend.boredom += 1;
         sleepy(bestFriend.width,bestFriend.height);
         passTime();
         stats();
     }).mouseenter(function(){
-        $('#text').text(`Take a nap with your little friend. Decreases Sleepiness by 4, but increases boredom by 1`);
+        $('#text').text(`Take a nap with your little friend. Decreases Sleepiness by 4 and gives 1 Affection, but increases boredom by 1`);
     }).mouseleave(function(){
         tellTime();
     });
     $('#b6').on('click',function(){//--------------BUTTON 6
+        bestFriend.affection += 1;
+        bestFriend.sleepiness += 1;
         bestFriend.dirtiness -= 5;
         squishy(2,bestFriend.width,bestFriend.height);
         passTime();
         stats();
     }).mouseenter(function(){
-        $('#text').text(`Give your friend a bath. Decreases Dirtiness by 5.`);
+        $('#text').text(`Give your friend a bath. Decreases Dirtiness by 5 and gives 1 Affection, but increases Sleepiness by 1.`);
     }).mouseleave(function(){
         tellTime();
     });
 }
 //primary button functionality--------------------------------END
-
 
 function gameEnd(){
     $('#optionHolder').empty();
@@ -572,7 +578,7 @@ function gameEnd(){
     $('#optionHolder').append($(`<button class="options" id="b1">So soon?</button>`));
         $('#b1').on('click',function(){
             $('#optionHolder').empty();
-            if (bestFriend.affection >= 30){
+            if (bestFriend.affection >= 40){
                 $('#text').text('It looks like you really did a great job making your buddy happy. Great job!')
                 $('#optionHolder').append($(`<button class="options" id="b1">Thank you. We had a lot of fun!</button>`));
                     $('#b1').on('click',function(){
