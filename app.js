@@ -127,7 +127,7 @@ function testCheck (){
     console.log(bestFriend);
 }
 class friends {
-    static totalFriends = 0;
+    static friendCount = 0;
     constructor (){
         this.name = "placeHolder";
         this.affection = 0;
