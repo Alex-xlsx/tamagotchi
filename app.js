@@ -52,21 +52,33 @@
 //the avatar could be made of a grind of roughly 20 small squares inside 1 larger div. That div could be moved around to move the avatar. Simple squash and stretch can be done on it
 
 //Ooooo! Maybe make little black divs that cover the stars on the opening screen, that fade in and out so that they twinkle? 
-///////----------------------------Audio frame START
-// const audio = document.getElementById("audio1");
-// function playAudio(name){
-//     name.play();
-// }
-// function stopAudio(name){
-//     name.pause();
-// }
-///////----------------------------Audio frame END
+
 ///////Universal variable declaration
 let friendCount = 0;
 let currentTime = 0;
 let red = 0
 let green = 0;
 let blue = 0;
+///////----------------------------Audio frame START
+const audio1 = document.getElementById("audio1");
+audio1.volume = .1;
+const audio2 = document.getElementById("audio2");
+audio2.volume = .1;
+const audio3 = document.getElementById("audio3");
+const audio4 = document.getElementById("audio4");
+const audio5 = document.getElementById("audio5");
+const audio6 = document.getElementById("audio6");
+const audio7 = document.getElementById("audio7");
+
+function playAudio(name){
+    name.currenTime = 0;
+    name.play();
+}
+function stopAudio(name){
+    name.pause();
+}
+///////----------------------------Audio frame END
+
 /////////////////////////------------START OF TIME/CHARACTER STATS
 function setTime(time){
     if (time === 0){
@@ -213,6 +225,8 @@ function delayHolder (delay) {
         if (waitTime <= 0){
             window.clearInterval(timeWindow);
             $('#character1').addClass(`animate-keyframe`);
+            audio3.loop = false;
+            audio4.loop = false;
             if(bestFriend.age >=3 && bestFriend.affection >=15){
                 $('#character1').css('animation-name','breathe2');
                 bestFriend.width = 100;
@@ -229,6 +243,8 @@ function delayHolder (delay) {
 function bouncy(bounces,x,y){
     $('#character1').removeClass(`animate-keyframe`);
     delayHolder(bounces*550);
+    playAudio(audio3);
+    audio3.loop = true;
     for (let i = 0;i<bounces;i++){
         $('#character1').animate({
             marginBottom: 10,
@@ -270,7 +286,10 @@ function bouncy(bounces,x,y){
 function squishy(squishes,x,y){
     $('#character1').removeClass(`animate-keyframe`);
     delayHolder(squishes*300);
+    playAudio(audio4);
+    audio4.loop = true;
     for (let i = 0;i<squishes;i++){
+        playAudio(audio4);
         $('#character1').animate({
             marginBottom: 10,
             width: x*1.4,
@@ -317,6 +336,7 @@ function sleepy(x,y){
 
 /////////////////////////---------------------------GAME STARTUP
 $('#start').on('mousedown',function(){
+    playAudio(audio2);
     $('#start').css('backgroundColor','white');
     $('#start').css('color','gold');
     $('#text').text('');
@@ -339,28 +359,42 @@ $('#start').on('click',function(){
     });
 });
 function gameStart(){
+    stopAudio(audio7);
+    audio7.loop = false;
+    audio5.volume = 0;
+    //this should make a cool fade
+        playAudio(audio5);
+        $(audio5).animate({
+            volume: .1
+        },1000,'linear');
+        audio5.loop = true;
     $('#optionHolder').empty();
         $('#text').text(`Hello there! You look like you could use a friend. Would you mind helping me make them?`)
         $('#optionHolder').append($('<button class="options" id="b1">Certainly!</button>'))
             $('#b1').on('click',function(){
+                playAudio(audio1);
                 $('#optionHolder').empty();
                 $('#text').text(`Wonderful, I knew you would help! How about I ask you some questions, that will help us make the best friend we can.`)
                 $('#optionHolder').append($('<button class="options" id="b1">Lets get started</button>'))        
                 $('#b1').on('click',function(){
+                    playAudio(audio1);
                     $('#optionHolder').empty();
                     $('#text').text(`Question 1: Which color do you prefer?`)
                     $('#optionHolder').append($('<button class="options" id="b1">Red</button>')) 
                     $('#b1').on('click',function(){
+                        playAudio(audio1);
                         red ++
                         questions1()  
                     });
                     $('#optionHolder').append($('<button class="options" id="b2">Green</button>'))
                     $('#b2').on('click',function(){
+                        playAudio(audio1);
                         green ++
                         questions1()  
                     });
                     $('#optionHolder').append($('<button class="options" id="b3">Blue</button>'))
                     $('#b3').on('click',function(){
+                        playAudio(audio1);
                         blue ++
                         questions1()  
                     });
@@ -373,16 +407,19 @@ function questions1(){
     $('#text').text(`Which of these sounds the most fun?`)
     $('#optionHolder').append($('<button class="options" id="b1">Climbing on a mountain</button>')) 
     $('#b1').on('click',function(){
+        playAudio(audio1);
         red ++
         questions2()  
     });
     $('#optionHolder').append($('<button class="options" id="b2">Hiking in the forest</button>'))
     $('#b2').on('click',function(){
+        playAudio(audio1);
         green ++
         questions2()  
     });
     $('#optionHolder').append($('<button class="options" id="b3">Swimming in the ocean</button>'))
     $('#b3').on('click',function(){
+        playAudio(audio1);
         blue ++
         questions2()  
     });
@@ -392,16 +429,19 @@ function questions2(){
     $('#text').text(`Last question, which of these sounds like a tasty desert?`)
     $('#optionHolder').append($('<button class="options" id="b1">Hot cookies</button>')) 
     $('#b1').on('click',function(){
+        playAudio(audio1);
         red ++
         creation()  
     });
     $('#optionHolder').append($('<button class="options" id="b2">Fresh strawberries</button>'))
     $('#b2').on('click',function(){
+        playAudio(audio1);
         green ++
         creation()  
     });
     $('#optionHolder').append($('<button class="options" id="b3">Ice cream</button>'))
     $('#b3').on('click',function(){
+        playAudio(audio1);
         blue ++
         creation()  
     });
@@ -427,6 +467,7 @@ function creation(){
     $('#text').text(`What a magnificent friend!`)
     $('#optionHolder').append($('<button class="options" id="b1">What happens now?</button>'))        
     $('#b1').on('click',function(){
+        playAudio(audio1);
         $('#optionHolder').empty();
         $('#text').text(`You must decide on a name for this lovely creature, of course-`)
         $('#text').append('<input class="input" placeholder="What do you think it should be called?"></input>')
@@ -439,6 +480,7 @@ function creation(){
                 $('#text').text(`${bestFriend.name}? What a fantastic name! I think you two will be fast friends. Please take good care of ${bestFriend.name} from now on, okay?`);                
                 $('#optionHolder').append($(`<button class="options" id="b1">I can't wait</button>`)) 
                 $('#b1').on('click',function(){
+                    playAudio(audio1);
                     currentTime=1;
                     setTime(currentTime);
                     exitCreation()
@@ -460,20 +502,28 @@ function tellTime(){
     }  
 }
 function exitCreation(){
+    stopAudio(audio5);
+    audio5.loop = false;
+    audio6.volume = .1;
+    playAudio(audio6);
+    audio6.loop = true;
     stats();
     bouncy(2,bestFriend.width,bestFriend.height);
     $('#optionHolder').empty();
     $('#text').text(`A few tips to help you get started: Your new buddy loves Affection, so you should pet it and read to it whenever you can.`); 
     $('#optionHolder').append($('<button class="options" id="b1" type="submit">Sounds easy enough</button>'));
     $('#b1').on('click',function(){
+        playAudio(audio1);
         $('#optionHolder').empty();
         $('#text').text(`However, over time your buddy will become more bored, hungry, and sleepy over time.`)
         $('#optionHolder').append($('<button class="options" id="b1" type="submit">Oh dear.</button>'));
         $('#b1').on('click',function(){
+            playAudio(audio1);
             $('#optionHolder').empty();
             $('#text').text(`Every day at the end of the night your buddy will go to sleep and become less tired, but you'll need to make sure all their needs are met or their affection will go down.`)
             $('#optionHolder').append($('<button class="options" id="b1" type="submit">Sleep is important</button>'));
             $('#b1').on('click',function(){
+                playAudio(audio1);
                 $('#optionHolder').empty();
                 $('#text').text(`Good luck! I know you can do it.`);
                 $('#optionHolder').append($(`<button class="options" id="b1" type="submit">I'll try my best!</button>`));
@@ -497,6 +547,7 @@ function mainLoop (){
     $('#optionHolder').append($(`<button class="options repeated" id="b6">Clean</button>`));
 //primary button functionality--------------------------------START
     $('#b1').on('click',function(){//--------------BUTTON 1
+        playAudio(audio1);
         bestFriend.affection += 3;
         bestFriend.sleepiness += 1;
         squishy(3,bestFriend.width,bestFriend.height);
@@ -508,6 +559,7 @@ function mainLoop (){
         tellTime();
     });
     $('#b2').on('click',function(){//--------------BUTTON 2
+        playAudio(audio1);
         bestFriend.affection +=3;
         bestFriend.boredom += 1;
         squishy(2,bestFriend.width,bestFriend.height);
@@ -519,6 +571,7 @@ function mainLoop (){
         tellTime();
     });
     $('#b3').on('click',function(){//--------------BUTTON 3
+        playAudio(audio1);
         bestFriend.boredom -= 5;
         bestFriend.affection += 1;
         bestFriend.dirtiness += 2;
@@ -527,11 +580,12 @@ function mainLoop (){
         passTime();
         stats();
     }).mouseenter(function(){
-        $('#text').text(`Play a game with ${bestFriend.name}. Decreases boredom by 5 and increases Affection by 1, but also increases Dirtiness and sleepiness by 2`);
+        $('#text').text(`Play a game with ${bestFriend.name}. Decreases boredom by 5 and increases Affection by 1, but also increases Dirtiness and Sleepiness by 2`);
     }).mouseleave(function(){
         tellTime();
     });
     $('#b4').on('click',function(){//--------------BUTTON 4
+        playAudio(audio1);
         bestFriend.affection += 1;
         bestFriend.hunger -= 4;
         bestFriend.dirtiness += 2;
@@ -544,6 +598,7 @@ function mainLoop (){
         tellTime();
     });
     $('#b5').on('click',function(){ //--------------BUTTON 5
+        playAudio(audio1);
         bestFriend.affection += 1;
         bestFriend.sleepiness -= 4;
         bestFriend.boredom += 1;
@@ -556,6 +611,7 @@ function mainLoop (){
         tellTime();
     });
     $('#b6').on('click',function(){//--------------BUTTON 6
+        playAudio(audio1);
         bestFriend.affection += 1;
         bestFriend.sleepiness += 1;
         bestFriend.dirtiness -= 5;
@@ -571,28 +627,37 @@ function mainLoop (){
 //primary button functionality--------------------------------END
 
 function gameEnd(){
+    stopAudio(audio6);
+    audio6.loop = false;
+    audio7.volume = .075;
+    playAudio(audio7);
+    audio7.loop = true;
     $('#optionHolder').empty();
     $('#text').empty();
     setTime(6);
     $('#text').text('Looks like our time is up! Lets see how your buddy has grown.')
     $('#optionHolder').append($(`<button class="options" id="b1">So soon?</button>`));
         $('#b1').on('click',function(){
+            playAudio(audio1);
             $('#optionHolder').empty();
-            if (bestFriend.affection >= 40){
+            if (bestFriend.affection >= 35){
                 $('#text').text('It looks like you really did a great job making your buddy happy. Great job!')
                 $('#optionHolder').append($(`<button class="options" id="b1">Thank you. We had a lot of fun!</button>`));
+                playAudio(audio1);
                     $('#b1').on('click',function(){
                         $('#optionHolder').empty();
                         $('#text').text('HAPPY ENDING')
                         $('#optionHolder').append($(`<button class="options" id="b1">Thanks for playing! Start new game?</button>`));
                             $('#b1').on('click',function(){
-                            gameReset();
+                                playAudio(audio1);
+                                gameReset();
                             });
                     });                
             } else {
                 $('#text').text(`It seems like you and your buddy could've been better friends. Perhaps you should try again?`)
                 $('#optionHolder').append($(`<button class="options" id="b1">I'll try harder next time!</button>`));
                     $('#b1').on('click',function(){
+                        playAudio(audio1);
                         gameReset();
                     });        
             }
@@ -619,3 +684,4 @@ function gameReset (){
     setTime(5)
     gameStart();
 }
+

@@ -1,0 +1,21 @@
+USER STORIES:
+//////////////////
+SPLASH PAGE-
+On load the header/text/button displays all have simple place holders.
+In the main display's center there is a "START" button, with animated glowing outline to attract user attention.
+Pressing the START button will play an animation, then transition to the Start-Up portion.
+--------
+START UP- 
+The main display gains a background, the text section is replaced with introductory text, and the button display gains one response button.
+The response button advances the text box forward until it reaches a questioning phase.
+QUESTIONING PHASE- 
+The text section prompts the user with three sequential questions. These questions each have three answer buttons, which when given proive values to the JS. 
+Based on the values given to the JS, a character sprite is generated in the main display. 
+There is a one button advance with the text box, and then the player is prompted to input a name for the newly generated sprite. A confirmation button appears at the same time; this button is non-responsive until the player fills the input box. 
+Afterward there are more single button responses as it transitions to the main game loop.
+-------
+MAIN GAME LOOP- 
+At the start of the main game loop the player is given an explanation of gameplay, with one button responses to push text forward. Afterward the buttons switch out for six interaction options, and remain this way until 40 buttons have been pressed. Each button press modifies the the values of the sprite the character named. After each press the background changes to reflect "time passing" and an animation plays on the sprite. 
+After 12 button presses if the sprite has the correct "affection" value (15) it will grow in size. After 24 button presses if the sprite as the correct "affection" value (30) it will grow in size again. 
+After 40 button presses the game then checks the sprite's "affection" value against a parameter (35). If the value matches or exceeds the player is congratulated on their success and offered a new start. If the value does not match or exceed the player is informed they have not been successful and is offered to try again. 
+Regardless of the scenario the following button presses will lead to a complete game reset. 
