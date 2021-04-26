@@ -107,10 +107,16 @@ function passTime(){
         bestFriend.sleepiness+= 1;
         bestFriend.hunger+=1;
         bestFriend.boredom+=1;
+        if (bestFriend.affection <= 1 || bestFriend.sleepiness > 15 || bestFriend.hunger > 15){
+            gameDeath();
+        }
         unhappy();
     } else if (currentTime ===4){
         currentTime = 1;
         setTime(currentTime);
+        if (bestFriend.affection <= 1 || bestFriend.sleepiness > 15 || bestFriend.hunger > 15){
+            gameDeath();
+        }
         if (bestFriend.age === 10){
             gameEnd();
         }
@@ -130,7 +136,7 @@ class friends {
     static friendCount = 0;
     constructor (){
         this.name = "placeHolder";
-        this.affection = 0;
+        this.affection = 5;
         this.boredom = 0;
         this.sleepiness = 0;
         this.dirtiness = 0;
@@ -218,15 +224,23 @@ function delayHolder (delay) {
             $('#character1').addClass(`animate-keyframe`);
             audio3.loop = false;
             audio4.loop = false;
-            if(bestFriend.age >=3 && bestFriend.affection >=15){
+            if(bestFriend.affection >=15){
                 $('#character1').css('animation-name','breathe2');
+                $('#character1').css('animation-duration','2.5');
                 bestFriend.width = 100;
                 bestFriend.height = 80;
             } 
-            if (bestFriend.age >=6 && bestFriend.affection >=30){
+            if (bestFriend.affection >=25){
                 $('#character1').css('animation-name','breathe3');
+                $('#character1').css('animation-duration','3');
                 bestFriend.width = 150;
                 bestFriend.height = 120;
+            }
+            if (bestFriend.affection >=35){
+                $('#character1').css('animation-name','breathe4');
+                $('#character1').css('animation-duration','3.5');
+                bestFriend.width = 200;
+                bestFriend.height = 160;
             }
         }
     }, delay);
@@ -353,7 +367,6 @@ function gameStart(){
     stopAudio(audio7);
     audio7.loop = false;
     audio5.volume = 0;
-    //this should make a cool fade
         playAudio(audio5);
         $(audio5).animate({
             volume: .05
@@ -539,7 +552,7 @@ function mainLoop (){
 //primary button functionality--------------------------------START
     $('#b1').on('click',function(){//--------------BUTTON 1
         playAudio(audio1);
-        bestFriend.affection += 3;
+        bestFriend.affection += 4;
         bestFriend.sleepiness += 1;
         squishy(3,bestFriend.width,bestFriend.height);
         passTime();
@@ -551,7 +564,7 @@ function mainLoop (){
     });
     $('#b2').on('click',function(){//--------------BUTTON 2
         playAudio(audio1);
-        bestFriend.affection +=3;
+        bestFriend.affection +=4;
         bestFriend.boredom += 1;
         squishy(2,bestFriend.width,bestFriend.height);
         passTime();
@@ -631,7 +644,7 @@ function gameEnd(){
         $('#b1').on('click',function(){
             playAudio(audio1);
             $('#optionHolder').empty();
-            if (bestFriend.affection >= 35){
+            if (bestFriend.affection >= 40){
                 $('#text').text('It looks like you really did a great job making your buddy happy. Great job!')
                 $('#optionHolder').append($(`<button class="options" id="b1">Thank you. We had a lot of fun!</button>`));
                 playAudio(audio1);
@@ -655,6 +668,35 @@ function gameEnd(){
 
         });
 }
+function gameDeath(){
+    stopAudio(audio6);
+    audio6.loop = false;
+    audio7.volume = .05;
+    playAudio(audio7);
+    audio7.loop = true;
+    $('#character1').css('animation-name','death');
+    $('#optionHolder').empty();
+    $('#text').empty();
+    setTime(6);
+    $('#text').text('Oh my gOSH. You KILLED it? How did you KILL it!?!?')
+    $('#optionHolder').append($(`<button class="options" id="b1">Oops.</button>`));
+        $('#b1').on('click',function(){
+            playAudio(audio1);
+            $('#optionHolder').empty();
+            $('#text').text(`YEAH. OOPS IS RIGHT. I hope you feel bad for what you've done!`)
+                $('#optionHolder').append($(`<button class="options" id="b1">I'm SO sorry!</button>`));
+                playAudio(audio1);
+                    $('#b1').on('click',function(){
+                        $('#optionHolder').empty();
+                        $('#text').text(`It's... okay. You can try again when you're ready.`)
+                        $('#optionHolder').append($(`<button class="options" id="b1">I would like to try again, please</button>`));
+                            $('#b1').on('click',function(){
+                                playAudio(audio1);
+                                gameReset();
+                            });
+                    });
+            });
+}
 
 function gameReset (){
     $('#text').empty();
@@ -674,4 +716,3 @@ function gameReset (){
     setTime(5)
     gameStart();
 }
-
