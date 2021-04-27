@@ -644,7 +644,7 @@ function gameEnd(){
         $('#b1').on('click',function(){
             playAudio(audio1);
             $('#optionHolder').empty();
-            if (bestFriend.affection >= 40){
+            if (bestFriend.affection >= 45){
                 $('#text').text('It looks like you really did a great job making your buddy happy. Great job!')
                 $('#optionHolder').append($(`<button class="options" id="b1">Thank you. We had a lot of fun!</button>`));
                 playAudio(audio1);
