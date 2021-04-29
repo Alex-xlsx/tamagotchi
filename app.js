@@ -430,7 +430,7 @@ function questions1(){
 }
 function questions2(){
     $('#optionHolder').empty();
-    $('#text').text(`Last question, which of these sounds like a tasty desert?`)
+    $('#text').text(`Last question, which of these sounds like a tasty dessert?`)
     $('#optionHolder').append($('<button class="options" id="b1">Hot cookies</button>')) 
     $('#b1').on('click',function(){
         playAudio(audio1);
@@ -519,7 +519,7 @@ function exitCreation(){
     $('#b1').on('click',function(){
         playAudio(audio1);
         $('#optionHolder').empty();
-        $('#text').text(`However, over time your buddy will become more bored, hungry, and sleepy over time.`)
+        $('#text').text(`However, your buddy will become more bored, hungry, and sleepy over time.`)
         $('#optionHolder').append($('<button class="options" id="b1" type="submit">Oh dear.</button>'));
         $('#b1').on('click',function(){
             playAudio(audio1);
